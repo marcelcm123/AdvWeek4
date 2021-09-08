@@ -28,7 +28,7 @@ class StudentListAdapter(val studenList:ArrayList<Student>)
 
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
         holder.view.txtId.text = studenList[position].id
-        holder.view.txtId.text = studenList[position].name
+        holder.view.txtName.text = studenList[position].name
 
         holder.view.btnDetail.setOnClickListener {
             val action = StudentListFragmentDirections.actionStudentDetail()
