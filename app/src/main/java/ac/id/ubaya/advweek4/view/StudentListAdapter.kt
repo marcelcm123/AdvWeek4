@@ -2,6 +2,7 @@ package ac.id.ubaya.advweek4.view
 
 import ac.id.ubaya.advweek4.R
 import ac.id.ubaya.advweek4.model.Student
+import ac.id.ubaya.advweek4.util.loadImage
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,9 +30,12 @@ class StudentListAdapter(val studenList:ArrayList<Student>)
     override fun onBindViewHolder(holder: StudentViewHolder, position: Int) {
         holder.view.txtId.text = studenList[position].id
         holder.view.txtName.text = studenList[position].name
+        holder.view.imageView.loadImage(studenList[position].photoUrl.toString(), holder.view.progressBar)
+
+        var id = studenList[position].id
 
         holder.view.btnDetail.setOnClickListener {
-            val action = StudentListFragmentDirections.actionStudentDetail()
+            val action = StudentListFragmentDirections.actionStudentDetail(id)
             Navigation.findNavController(it).navigate(action)
         }
     }

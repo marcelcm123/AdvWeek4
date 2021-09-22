@@ -18,9 +18,9 @@ class StudentListFragment : Fragment() {
     private val studentListAdapter = StudentListAdapter(arrayListOf())
 
     fun observeViewModel() {
-        viewModel.studentsLD.observe(viewLifecycleOwner, Observer {
+        /*viewModel.studentsLD.observe(viewLifecycleOwner, Observer {
             studentListAdapter.updateStudentList(it)
-        })
+        })*/
         viewModel.studentLoadErrorLD.observe(viewLifecycleOwner, Observer {
             if(it == true) {
                 txtError.visibility = View.VISIBLE
@@ -51,9 +51,17 @@ class StudentListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
-        viewModel.refresh()
+        viewModel .refresh()
         recView.layoutManager = LinearLayoutManager(context)
         recView.adapter = studentListAdapter
+
+        refreshLayout.setOnRefreshListener {
+            recView.visibility = View.GONE
+            txtError.visibility = View.GONE
+            progressLoad.visibility = View.VISIBLE
+            viewModel.refresh()
+            refreshLayout.isRefreshing = false
+        }
         observeViewModel()
     }
 

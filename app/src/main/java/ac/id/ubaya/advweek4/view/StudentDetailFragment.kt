@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import ac.id.ubaya.advweek4.R
 import ac.id.ubaya.advweek4.model.Student
+import ac.id.ubaya.advweek4.util.loadImage
 import ac.id.ubaya.advweek4.viewmodel.DetailViewModel
 import ac.id.ubaya.advweek4.viewmodel.ListViewModel
 import androidx.lifecycle.Observer
@@ -14,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.fragment_student_detail.*
 import kotlinx.android.synthetic.main.fragment_student_list.*
+import kotlinx.android.synthetic.main.student_list_item.view.*
 
 
 class StudentDetailFragment : Fragment() {
@@ -32,6 +34,7 @@ class StudentDetailFragment : Fragment() {
             txtName.setText(name)
             txtBoD.setText(bod)
             txtPhone.setText(phone)
+            imageView2.loadImage(photoUrl.toString(),progressBar2)
 
 
         })
