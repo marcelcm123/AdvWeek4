@@ -31,7 +31,7 @@ class ListViewModel(application: Application): AndroidViewModel(application) {
         val stringRequest = StringRequest(Request.Method.GET, url,
             { respone ->
                 val sType = object : TypeToken<List<Student>>(){}.type
-                val result = Gson().fromJson<Student>(respone,Student::class.java)
+                val result = Gson().fromJson(respone,Student::class.java)
                 studentsLD.value = result
                 loadingLD.value = false
                 Log.d("showvolley", respone.toString())

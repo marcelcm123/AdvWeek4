@@ -10,6 +10,7 @@ import ac.id.ubaya.advweek4.model.Student
 import ac.id.ubaya.advweek4.util.loadImage
 import ac.id.ubaya.advweek4.viewmodel.DetailViewModel
 import ac.id.ubaya.advweek4.viewmodel.ListViewModel
+import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,25 +22,6 @@ import kotlinx.android.synthetic.main.student_list_item.view.*
 class StudentDetailFragment : Fragment() {
     private lateinit var viewModel: DetailViewModel
 
-    fun observeViewModel(){
-        viewModel.studentLD.observe(viewLifecycleOwner, Observer {
-            var Studentt = viewModel.studentLD.value
-            var id = Studentt?.id
-            var name = Studentt?.name
-            var bod = Studentt?.bod
-            var phone = Studentt?.phone
-            var photoUrl = Studentt?.photoUrl
-
-            txtId.setText(id)
-            txtName.setText(name)
-            txtBoD.setText(bod)
-            txtPhone.setText(phone)
-            imageView2.loadImage(photoUrl.toString(),progressBar2)
-
-
-        })
-
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,8 +32,28 @@ class StudentDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
-        viewModel.fetch()
-        observeViewModel()
+        if(arguments != null){
+            val id = StudentDetailFragmentArgs.fromBundle(requireArguments()).id
+            viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
+            viewModel.fetch(id)
+
+            observeViewModel()
+        }
+        else{
+            Toast.makeText(view.context,"Student Not Found!",Toast.LENGTH_LONG).show()
+        }
+
+    }
+    fun observeViewModel(){
+        viewModel.studentLD.observe(viewLifecycleOwner, Observer {
+            txtId.setText(it.id)
+            txtName.setText(it.name)
+            txtBoD.setText(it.bod)
+            txtPhone.setText(it.phone)
+            imageView2.loadImage(it.photoUrl.toString(),progressBar2)
+
+
+        })
+
     }
 }
